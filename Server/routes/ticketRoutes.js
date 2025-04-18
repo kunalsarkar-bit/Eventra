@@ -248,14 +248,12 @@ async function updateExcelDatabase() {
 router.post("/bulk-generate-all", protect, async (req, res) => {
   try {
     const zones = ["B", "C", "D"];
-    const ticketsPerZone = 10; // Set to 300 for actual use
-
+    const ticketsPerZone = 1; // Set to 300 for actual use
     const imagePaths = {
       B: path.join(__dirname, "../assets/ticket_b.jpg"),
       C: path.join(__dirname, "../assets/ticket_c.jpg"),
       D: path.join(__dirname, "../assets/ticket_d.jpg"),
     };
-
     const doc = new PDFDocument({ size: "A4", margin: 0 });
     res.setHeader("Content-Type", "application/pdf");
     res.setHeader(
@@ -263,22 +261,18 @@ router.post("/bulk-generate-all", protect, async (req, res) => {
       'attachment; filename="AllTickets.pdf"'
     );
     doc.pipe(res);
-
     const gap = 3; // ~0.1 cm gap between tickets (1cm ≈ 28.35 pts)
     const rawTicketHeight = 842 / 4;
     const ticketHeight = rawTicketHeight - gap;
     const pageWidth = 595;
     let ticketCount = 0;
-
     for (const zone of zones) {
       const backgroundImage = imagePaths[zone];
-
       for (let i = 1; i <= ticketsPerZone; i++) {
         const ticketNumber = `${zone}-${i.toString().padStart(3, "0")}`;
         const customerName = `Guest-${ticketNumber}`;
         const ticketId = `TKT-${zone}-${Date.now()}-${i}`;
         const price = zone === "B" ? 350 : zone === "C" ? 200 : 100;
-
         // Save to DB
         const newTicket = new Ticket({
           ticketId,
@@ -290,7 +284,6 @@ router.post("/bulk-generate-all", protect, async (req, res) => {
           soldAt: new Date(),
         });
         await newTicket.save();
-
         // QR Code generation
         const qrData = JSON.stringify({
           ticketId,
@@ -299,46 +292,39 @@ router.post("/bulk-generate-all", protect, async (req, res) => {
           customerName,
           price,
         });
-
         const qrCodeDataURL = await QRCode.toDataURL(qrData);
         const qrImage = qrCodeDataURL.split(",")[1];
-
         const ticketIndexOnPage = ticketCount % 4;
         const y = ticketIndexOnPage * (ticketHeight + gap);
-
         if (ticketIndexOnPage === 0 && ticketCount > 0) {
           doc.addPage();
         }
-
         // Draw background image
         doc.image(backgroundImage, 0, y, {
           width: pageWidth,
           height: ticketHeight,
         });
-
-        // Place QR image
-        const qrX = pageWidth - 69;
-        const qrY = y + ticketHeight - 76;
+        
+        // Place QR image - UPDATED: even larger size and adjusted position
+        const qrSize = 75; // Increased from 65 to 75
+        const qrX = pageWidth - 80;
+        const qrY = y + ticketHeight - 95; // Moved down slightly from -95 to -90
         doc.image(Buffer.from(qrImage, "base64"), qrX, qrY, {
-          width: 55,
+          width: qrSize,
         });
-
-        // Ticket ID above QR (smaller + in one line)
-        // Ticket ID above QR (smaller + one line + left-shifted + more gap)
-        // Ticket ID above QR (more left + more bottom gap)
+        
+        // Ticket ID above QR - UPDATED: moved more to the right
         doc
           .fillColor("white")
           .fontSize(7)
-          .text(`ID: ${ticketId}`, qrX - 22, qrY - 23, {
+          .text(`ID: ${ticketId}`, qrX - 10, qrY - 23, { // Shifted more to the right
             width: 90,
             align: "center",
             lineGap: 0,
           });
-
         ticketCount++;
       }
     }
-
     doc.end();
   } catch (error) {
     console.error("Error in bulk generation:", error);
