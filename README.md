@@ -150,12 +150,12 @@ cd Eventra
 
 ### 3. FOR THE FRONTEND PART :------------------------------------------------------------------------
 
-  **A. Go to "client" folder for accessing frontend**
+  **A. Go to "Client" folder for accessing frontend**
   ```bash
-  cd client
+  cd Client
   ```
   
-  **B. Create a .env file inside "client" folder**
+  **B. Create a .env file inside "Client" folder**
   ```bash
   # Step 1: Create a new .env file
   touch .env
@@ -173,19 +173,19 @@ cd Eventra
   npm install
   ```
 
-  **D. Start the client side**
+  **D. Start the Client side**
   ```bash
   npm run dev
   ```
 
 ### 4. FOR THE BACKEND PART :------------------------------------------------------------------------
 
-  **A. Go to "server" folder for accessing backend**
+  **A. Go to "Server" folder for accessing backend**
   ```bash
-  cd server
+  cd Server
   ```
   
-  **B. Create a .env file inside "server" folder**
+  **B. Create a .env file inside "Server" folder**
   ```bash
   # Step 1: Create a new .env file
   touch .env
@@ -210,7 +210,7 @@ cd Eventra
   npm install
   ```
 
-  **D. Start the server side**
+  **D. Start the Server side**
   ```bash
   npm start
   ```
@@ -223,15 +223,15 @@ To run the project locally, follow these steps:
 
 ### For Backend (Server)
 ```bash
-cd server
+cd Server
 npm install
 npm start
 ```
-This starts the backend server using Express on the configured port (default: **http://localhost:5000**).
+This starts the backend Server using Express on the configured port (default: **http://localhost:5000**).
 
 ### For Frontend (Client)
 ```bash
-cd client
+cd Client
 npm install
 npm run dev
 ```
@@ -239,7 +239,7 @@ This runs the React frontend with Vite on **http://localhost:3000**.
 
 ### Access the App
 
-Once both servers are running, open your browser and go to:
+Once both Servers are running, open your browser and go to:
 ```
 http://localhost:3000
 ```
@@ -263,11 +263,11 @@ You can now:
 **1. Start backend and frontend**
 ```bash
 # Terminal 1 - Backend
-cd server
+cd Server
 npm start
 
 # Terminal 2 - Frontend
-cd client
+cd Client
 npm run dev
 ```
 
@@ -309,7 +309,7 @@ That's all for manual testing — the goal is to verify that ticket generation, 
 
 ```
 Eventra/
-├── client/                    # Frontend React application
+├── Client/                    # Frontend React application
 │   ├── src/
 │   │   ├── components/       # Reusable UI components
 │   │   ├── pages/           # Page components
@@ -318,7 +318,7 @@ Eventra/
 │   ├── public/              # Static assets
 │   └── package.json         # Frontend dependencies
 │
-├── server/           # Backend Node.js application
+├── Server/           # Backend Node.js application
 │   ├── models/              # MongoDB schemas
 │   ├── routes/              # API endpoints
 │   ├── controllers/         # Business logic
