@@ -180,12 +180,12 @@ cd Eventra
 
 ### 4. FOR THE BACKEND PART :------------------------------------------------------------------------
 
-  **A. Go to "ticket-backend" folder for accessing backend**
+  **A. Go to "server" folder for accessing backend**
   ```bash
-  cd ticket-backend
+  cd server
   ```
   
-  **B. Create a .env file inside "ticket-backend" folder**
+  **B. Create a .env file inside "server" folder**
   ```bash
   # Step 1: Create a new .env file
   touch .env
@@ -223,7 +223,7 @@ To run the project locally, follow these steps:
 
 ### For Backend (Server)
 ```bash
-cd ticket-backend
+cd server
 npm install
 npm start
 ```
@@ -263,7 +263,7 @@ You can now:
 **1. Start backend and frontend**
 ```bash
 # Terminal 1 - Backend
-cd ticket-backend
+cd server
 npm start
 
 # Terminal 2 - Frontend
@@ -318,7 +318,7 @@ Eventra/
 │   ├── public/              # Static assets
 │   └── package.json         # Frontend dependencies
 │
-├── ticket-backend/           # Backend Node.js application
+├── server/           # Backend Node.js application
 │   ├── models/              # MongoDB schemas
 │   ├── routes/              # API endpoints
 │   ├── controllers/         # Business logic
